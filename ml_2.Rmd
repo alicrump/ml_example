@@ -86,6 +86,22 @@ x_1 <- clean %>%
 
 ```
 
+```{r}
+metrics(data = x_1, truth = dvote, estimate = pred_dvote)
+
+# proportion of estimates that were correct
+# gap is guess is how much better than a random guess we did
+```
+```{r}
+model_2 <- glm(data = clean, dvote ~ gender + party, family = "binomial")
+
+x_2 <- clean %>% 
+  mutate(prediction = predict(model_2, type = "response")) %>% 
+  mutate(pred_dvote = as.factor(ifelse(prediction > mean(prediction), "Yes", "No")))
+
+metrics(data = x_2, truth = dvote, estimate = pred_dvote)
+
+```
 
 
 
